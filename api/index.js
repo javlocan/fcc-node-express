@@ -2,16 +2,18 @@ require("dotenv").config();
 
 let express = require("express");
 let app = express();
+let path = require("path");
 
 app.use((req, res, next) => {
   console.log(req.method + " " + req.path + " - " + req.ip);
   next();
 });
 
-publicAbsolutePath = __dirname + "/public";
+publicAbsolutePath = path.join(__dirname, "..", "public");
 app.use("/public", express.static(publicAbsolutePath));
 
-homeAbsolutePath = __dirname + "/views/index.html";
+homeAbsolutePath = path.join(publicAbsolutePath, "index.html");
+
 app.get("/", (req, res) => {
   res.sendFile(homeAbsolutePath);
 });
